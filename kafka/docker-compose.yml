@@ -1,0 +1,48 @@
+name: 'infra'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: 'zookeeper'
+    ports:
+      - 2181:2181
+    networks:
+      - tejaswi-net
+  kafka:
+    image: wurstmeister/kafka:2.12-2.5.0
+    container_name: 'kafka'
+    ports:
+      - 9092:9092
+    environment:
+      KAFKA_LISTENERS: INTERNAL://kafka:29092,OUTSIDE://kafka:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:29092,OUTSIDE://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL      
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: streaming.topic.new:1:1,streaming.topic.old:1:1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - tejaswi-net
+  kafka-ui:
+    container_name: kafka-ui
+    image: provectuslabs/kafka-ui:latest
+    ports:
+      - 9190:8080
+    environment:
+      DYNAMIC_CONFIG_ENABLED: 'true'
+    networks:
+      - tejaswi-net
+  kafdrop:
+    image: obsidiandynamics/kafdrop:3.23.0
+    container_name: 'kafdrop'
+    ports:
+      - 9000:9000
+    environment:
+      KAFKA_BROKERCONNECT: 'kafka:29092'
+    networks:
+      - tejaswi-net
+
+networks:
+  tejaswi-net:
+    name: tejaswi-net
+    driver: bridge

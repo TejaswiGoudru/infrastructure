@@ -1,0 +1,24 @@
+name: "infra"
+services:
+  logstash:
+    platform: linux/amd64
+    image: docker.elastic.co/logstash/logstash:7.5.0
+    container_name: logstash
+    ports:
+      - "5044:5044" # Map host port 5044 to container port 5044 for Beats input
+      - "9600:9600" # Map host port 9600 to container port 9600 for API access
+    volumes:
+      - logstash-data:/usr/share/logstash/pipeline/
+    depends_on:
+      - elasticsearch
+    networks:
+      - tejaswi-net
+
+volumes:
+  logstash-data:
+    driver: local
+
+networks:
+  tejaswi-net:
+    name: tejaswi-net
+    driver: bridge

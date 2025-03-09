@@ -1,0 +1,11 @@
+
+name: 'infra'
+include:
+  - mysql/docker-compose.yml
+  - azure-sql-edge/docker-compose.yml
+  - postgres/docker-compose.yml
+
+networks:
+  tejaswi-net:
+    name: tejaswi-net
+    driver: bridge

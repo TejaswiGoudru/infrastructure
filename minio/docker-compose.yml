@@ -1,0 +1,36 @@
+name: 'infra'
+services:
+  minio:
+    platform: linux/amd64
+    container_name: minio
+    image: bitnami/minio:2021.6.17
+    ports:
+      - 9008:9008
+    volumes:
+      - minio_data:/data1
+    environment:
+      - MINIO_PORT_NUMBER=9008
+      - MINIO_ACCESS_KEY=minio-access-key
+      - MINIO_SECRET_KEY=minio-secret-key
+    networks:
+      - tejaswi-net
+  minio-createbuckets:
+      container_name: 'minio-createbuckets'
+      image: minio/mc
+      depends_on:
+         - minio
+      entrypoint: >
+         /bin/sh -c "
+            mc alias set minio http://minio:9008 minio-access-key minio-secret-key;
+            mc mb minio/sample-bucket;
+            mc policy set public minio/sample-bucket;
+            exit 0;"
+      networks:
+      - tejaswi-net
+volumes:
+  minio_data:
+    driver: local
+networks:
+  tejaswi-net:
+    name: tejaswi-net
+    driver: bridge

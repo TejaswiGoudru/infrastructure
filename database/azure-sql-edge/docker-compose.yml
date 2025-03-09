@@ -1,0 +1,23 @@
+name: 'infra'
+services:
+
+  mssql:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    environment:
+      - "ACCEPT_EULA=1"
+      - "MSSQL_SA_PASSWORD=Kkr#78q1re"
+    ports:
+      - "1433:1433"
+    networks:
+      - tejaswi-net
+    hostname: mssql
+    volumes:
+      - "mssql-azuresql-edge-data:/var/opt/mssql"
+
+volumes:
+  mssql-azuresql-edge-data:
+
+networks:
+  tejaswi-net:
+    name: tejaswi-net
+    driver: bridge

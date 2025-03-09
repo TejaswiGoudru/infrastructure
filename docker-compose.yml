@@ -1,0 +1,12 @@
+name: 'infra'
+include:
+  - ELK/docker-compose.yml
+  - database/docker-compose.yml
+  # - observability/prometheus/prometheus-docker-compose.yml
+  # - monitoring/docker-compose.yml
+  - minio/docker-compose.yml
+  
+networks:
+  tejaswi-net:
+    name: tejaswi-net
+    driver: bridge

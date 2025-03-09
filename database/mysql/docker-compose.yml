@@ -1,0 +1,21 @@
+name: 'infra'
+services:
+  mysql:
+    platform: linux/amd64
+    image: mysql:9.0.1
+    container_name: mysql
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    networks:
+      - tejaswi-net
+    environment:
+      - MYSQL_DATABASE=moviesdb
+      - MYSQL_ROOT_PASSWORD=secret
+    healthcheck:
+      test: "mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}"
+
+networks:
+  tejaswi-net:
+    name: tejaswi-net
+    driver: bridge

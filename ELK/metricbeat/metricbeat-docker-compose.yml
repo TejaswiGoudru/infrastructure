@@ -1,0 +1,32 @@
+name: "infra"
+
+services:
+  metricbeat:
+    platform: linux/amd64
+    image: docker.elastic.co/beats/metricbeat:7.5.0
+    container_name: metricbeat
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - KIBANA_HOSTS=http://kibana:5601
+      - LOGSTASH_HOSTS=http://logstash:9600
+    volumes:
+      - metricbeat-data:/usr/share/metricbeat/data
+      - "./metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "/sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro"
+      - "/proc:/hostfs/proc:ro"
+      - "/:/hostfs:ro"
+    depends_on:
+      - elasticsearch
+      - kibana
+    networks:
+      - tejaswi-net
+
+volumes:
+  metricbeat-data:
+    driver: local
+
+networks:
+  tejaswi-net:
+    name: tejaswi-net
+    driver: bridge

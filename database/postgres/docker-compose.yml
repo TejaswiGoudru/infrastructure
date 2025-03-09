@@ -1,0 +1,30 @@
+
+
+name: 'infra'
+
+services:
+
+  db:
+    container_name: postgres
+    platform: linux/amd64
+    image: postgres:9.6
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=admin
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    networks:
+      - tejaswi-net
+
+volumes:
+  pgdata:
+    driver: local
+
+networks:
+  tejaswi-net:
+    name: tejaswi-net
+    driver: bridge

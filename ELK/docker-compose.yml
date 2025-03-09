@@ -1,0 +1,12 @@
+name: 'infra'
+include:
+  - elasticsearch/elasticsearch-docker-compose.yml
+  - filebeat/filebeat-docker-compose.yml
+  - kibana/kibana-docker-compose.yml
+  - logstash/logstash-docker-compose.yml
+  - metricbeat/metricbeat-docker-compose.yml
+
+networks:
+  tejaswi-net:
+    name: tejaswi-net
+    driver: bridge
