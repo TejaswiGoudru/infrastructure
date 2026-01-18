@@ -4,10 +4,10 @@ name: 'infra'
 
 services:
 
-  db:
+  postgres:
     container_name: postgres
     platform: linux/amd64
-    image: postgres:9.6
+    image: postgres:17.4
     restart: always
     volumes:
       - pgdata:/var/lib/postgresql/data

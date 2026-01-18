@@ -1,0 +1,36 @@
+services:
+  sonarqube:
+    platform: linux/amd64
+    container_name: sonarqube-container # Custom container name
+    image: sonarqube:community
+    # depends_on:
+    #   - mysql
+    # environment:
+      # - SONAR_JDBC_URL=jdbc:mysql://mysql:3306/sonarqube?useSSL=false
+      # - SONAR_JDBC_URL=jdbc:sqlserver://localhost;databaseName=sonar
+      # - SONAR_JDBC_USERNAME=sonar
+      # - SONAR_JDBC_PASSWORD=sonar 
+    ports:
+      - "19000:9000"
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
+    # restart: unless-stopped # Restart policy
+    networks:
+      - tejaswi-net
+volumes:
+  sonarqube_data:
+    driver: local
+    # driver_opts:
+    #   type: none
+    #   o: bind
+    #   device: /home/tejaswi/sonarqube_data
+  sonarqube_extensions:
+    driver: local
+  sonarqube_bundled-plugins:
+    driver: local
+networks:
+  tejaswi-net:
+    name: tejaswi-net
+    driver: bridge

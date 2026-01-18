@@ -1,0 +1,9 @@
+
+name: 'infra'
+include:
+  - keycloak/docker-compose.yml
+
+networks:
+  tejaswi-net:
+    name: tejaswi-net
+    driver: bridge

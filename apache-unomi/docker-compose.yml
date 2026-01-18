@@ -1,0 +1,22 @@
+services:                  
+  unomi:
+    # Unomi version can be updated based on your needs
+    image: apache/unomi:1.5.7
+    environment:
+      - UNOMI_ELASTICSEARCH_ADDRESSES=elasticsearch:9200
+      - UNOMI_THIRDPARTY_PROVIDER1_IPADDRESSES=0.0.0.0/0,::1,127.0.0.1
+    ports:
+      - 8181:8181
+      - 9443:9443
+      - 8102:8102
+    networks:
+      - tejaswi-net
+    links:
+      - elasticsearch
+    depends_on:
+      - elasticsearch
+
+networks:
+  tejaswi-net:
+    name: tejaswi-net
+    driver: bridge

@@ -1,0 +1,20 @@
+name: 'infra'
+services:
+  redis:
+    platform: linux/amd64
+    container_name: redis
+    image: 'bitnami/redis:latest'
+    ports:
+      - "16379:6379"
+    environment:
+      # - 'REDIS_PASSWORD=A_Str0ng_Required_Password2'
+      # - 'REDISCLI_AUTH=A_Str0ng_Required_Password2'
+      - 'ALLOW_EMPTY_PASSWORD=yes'
+    networks:
+      - dx-network
+
+
+networks:
+  tejaswi-net:
+    name: tejaswi-net
+    driver: bridge

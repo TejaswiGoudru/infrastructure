@@ -1,0 +1,24 @@
+name: 'infra'
+services:
+  cassandra:
+    platform: linux/amd64
+    image: cassandra:latest
+    container_name: cassandra-container
+    ports:
+      - "9042:9042"
+    networks:
+      - tejaswi-net
+    environment:
+      - CASSANDRA_USER=admin
+      - CASSANDRA_PASSWORD=admin
+    volumes:
+      - cassandra-data:/var/lib/cassandra
+
+volumes:
+  cassandra-data:
+    driver: local  
+
+networks:
+  tejaswi-net:
+    name: tejaswi-net
+    driver: bridge

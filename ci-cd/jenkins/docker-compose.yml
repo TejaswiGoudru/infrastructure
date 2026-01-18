@@ -1,0 +1,17 @@
+
+services:
+  jenkins:
+    image: jenkins/jenkins:lts-jdk11
+    container_name: jenkins
+    restart: unless-stopped
+    ports:
+      - "9090:8080" # Map Jenkins' port 8080 to your host's port 8080
+      - "50000:50000" # Map Jenkins' port 50000 to your host's port 50000
+    networks:
+      - tejaswi-net
+    volumes:
+      - jenkins_home:/var/jenkins_home  # Create a persistent volume for Jenkins data
+      - /var/run/docker.sock:/var/run/docker.sock # Allow Jenkins to interact with Docker
+
+volumes:
+  jenkins_home:

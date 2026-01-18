@@ -10,11 +10,18 @@ services:
     networks:
       - tejaswi-net
     environment:
-      - MYSQL_DATABASE=moviesdb
-      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=account
+      - MYSQL_ROOT_PASSWORD=admin
+    volumes:
+      - .docker/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+      - db_data:/var/lib/mysql
     healthcheck:
       test: "mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}"
 
+volumes:
+  db_data:
+    driver: local  
+    
 networks:
   tejaswi-net:
     name: tejaswi-net

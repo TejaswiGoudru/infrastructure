@@ -1,6 +1,7 @@
 
 name: 'infra'
 include:
+  - cassandra/docker-compose.yml
   - mysql/docker-compose.yml
   - azure-sql-edge/docker-compose.yml
   - postgres/docker-compose.yml
