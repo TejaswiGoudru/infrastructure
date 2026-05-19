@@ -10,6 +10,7 @@ include:
 
 
   # - database/cassandra/docker-compose.yml
+  - database/mongodb/docker-compose.yml
   # - database/couchbase/docker-compose.yml
   # - database/postgres/docker-compose.yml
   # - database/postgres/docker-compose.yml
@@ -18,7 +19,7 @@ include:
   # apache-unomi
   # - ELK/elasticsearch/elasticsearch-docker-compose.yml
   # - apache-unomi/docker-compose.yml
-  - open-webui/docker-compose.yml
+  # - open-webui/docker-compose.yml
   
 networks:
   tejaswi-net:
